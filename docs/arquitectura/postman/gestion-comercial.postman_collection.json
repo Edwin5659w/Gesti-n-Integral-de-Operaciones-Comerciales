@@ -1,0 +1,38 @@
+{
+  "info": {
+    "name": "Gestion Comercial - Minimal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Clients - Create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"John Doe\", \"email\": \"john@example.com\", \"phone\": \"3219128803\" }" },
+        "url": { "raw": "http://localhost:3000/api/clients", "host": ["http://localhost:3000"], "path": ["api","clients"] }
+      }
+    },
+    {
+      "name": "Products - Create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{ \"name\": \"Mouse\", \"price\": 75000, \"stock\": 30 }" },
+        "url": { "raw": "http://localhost:3000/api/products", "host": ["http://localhost:3000"], "path": ["api","products"] }
+      }
+    },
+    {
+      "name": "Sales - Create (ejemplo)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"client_id\": 1, \"products\": [{ \"product_id\": 1, \"quantity\": 2 }] }"
+        },
+        "url": { "raw": "http://localhost:3000/api/sales", "host": ["http://localhost:3000"], "path": ["api","sales"] }
+      }
+    }
+  ]
+}

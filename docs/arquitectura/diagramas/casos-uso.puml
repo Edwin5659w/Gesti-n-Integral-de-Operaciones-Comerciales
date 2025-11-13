@@ -1,0 +1,23 @@
+@startuml Casos de Uso
+left to right direction
+
+actor Cliente
+actor Vendedor
+
+rectangle "Sistema de Gestión Comercial" {
+    usecase "Registrar Venta" as UC1
+    usecase "Consultar Inventario" as UC2
+    usecase "Gestionar Cliente" as UC3
+    usecase "Actualizar Stock" as UC4
+    usecase "Generar Reporte" as UC5
+}
+
+Cliente --> UC1
+Cliente --> UC2
+Vendedor --> UC1
+Vendedor --> UC2
+Vendedor --> UC3
+Vendedor --> UC4
+Vendedor --> UC5
+
+@enduml

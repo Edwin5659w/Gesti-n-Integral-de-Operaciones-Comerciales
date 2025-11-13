@@ -1,0 +1,15 @@
+@startuml Contexto del Sistema
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(cliente, "Cliente", "Usuario que realiza compras")
+Person(vendedor, "Vendedor", "Usuario que gestiona ventas")
+
+System(sistema, "Sistema de Gestión Comercial", "Permite gestionar clientes, productos y ventas")
+
+System_Ext(facturacion, "Sistema de Facturación", "Genera facturas electrónicas")
+
+Rel(cliente, sistema, "Consulta productos y realiza compras")
+Rel(vendedor, sistema, "Gestiona inventario y procesa ventas")
+Rel(sistema, facturacion, "Envía datos para facturación")
+
+@enduml

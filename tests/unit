@@ -1,0 +1,50 @@
+gestion-comercial
+├── src
+│   ├── api
+│   │   ├── controllers
+│   │   │   ├── authController.ts
+│   │   │   ├── clienteController.ts
+│   │   │   ├── productoController.ts
+│   │   │   └── ventaController.ts
+│   │   ├── middlewares
+│   │   │   ├── auth.ts
+│   │   │   └── validation.ts
+│   │   └── routes
+│   │       ├── auth.routes.ts
+│   │       ├── cliente.routes.ts
+│   │       ├── producto.routes.ts
+│   │       └── venta.routes.ts
+│   ├── config
+│   │   ├── database.ts
+│   │   └── server.ts
+│   ├── domain
+│   │   ├── entities
+│   │   │   ├── Cliente.ts
+│   │   │   ├── Producto.ts
+│   │   │   ├── Usuario.ts
+│   │   │   └── Venta.ts
+│   │   ├── interfaces
+│   │   │   └── repositories
+│   │   └── repositories
+│   ├── infrastructure
+│   │   ├── persistence
+│   │   │   └── repositories
+│   │   └── services
+│   ├── shared
+│   │   ├── types
+│   │   └── utils
+│   └── app.ts
+├── docs
+│   └── arquitectura
+│       ├── C4
+│       └── diagramas
+├── tests
+│   ├── integration
+│   └── unit
+│       ├── authController.test.ts
+│       ├── clienteController.test.ts
+│       ├── productoController.test.ts
+│       └── ventaController.test.ts
+├── package.json
+├── tsconfig.json
+└── README.md
