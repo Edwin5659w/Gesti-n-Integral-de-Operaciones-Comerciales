@@ -10,6 +10,6 @@
   [Link Video](https://www.youtube.com/watch?v=22MtTm7h-cM)
 
 ## Entrega II
- [Video-I-Arquitectura](https://youtu.be/M5Cm5fFzvBY?si=UbTukX3xnzVdH0NF)
- [Video-II-Postman](https://www.youtube.com/watch?v=kZEB3uvC8AI)
+- [Video-I-Arquitectura](https://youtu.be/M5Cm5fFzvBY?si=UbTukX3xnzVdH0NF)
+- [Video-II-Postman](https://www.youtube.com/watch?v=kZEB3uvC8AI)
 
