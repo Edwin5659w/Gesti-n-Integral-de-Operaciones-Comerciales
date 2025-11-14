@@ -18,4 +18,12 @@ export class VentaService {
     async obtenerVentaPorId(id: number) {
         return this.repository.obtenerPorId(id);
     }
+
+    async actualizarVenta(id: number, dto: { client_id?: number; products?: { product_id: number; quantity: number }[] }) {
+        return this.repository.actualizarVenta(id, dto);
+    }
+
+    async eliminarVenta(id: number) {
+        return this.repository.eliminarVenta(id);
+    }
 }

@@ -34,4 +34,8 @@ export class ProductoRepository implements IProductoRepository {
         if (!actualizado) throw new Error('Producto no encontrado');
         return actualizado;
     }
+
+    async eliminarProducto(id: number): Promise<void> {
+        await this.db.run('DELETE FROM products WHERE id = ?', [id]);
+    }
 }

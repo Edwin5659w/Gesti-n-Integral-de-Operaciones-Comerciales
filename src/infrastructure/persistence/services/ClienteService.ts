@@ -19,4 +19,8 @@ export class ClienteService {
     async actualizarCliente(id: number, dto: ActualizarClienteDTO): Promise<Cliente> {
         return this.repository.actualizar(id, dto);
     }
+
+    async eliminarCliente(id: number): Promise<void> {
+        return this.repository.eliminarCliente(id);
+    }
 }

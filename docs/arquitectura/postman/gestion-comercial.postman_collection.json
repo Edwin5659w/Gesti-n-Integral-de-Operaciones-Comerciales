@@ -5,34 +5,94 @@
   },
   "item": [
     {
-      "name": "Clients - Create",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": { "mode": "raw", "raw": "{ \"name\": \"John Doe\", \"email\": \"john@example.com\", \"phone\": \"3219128803\" }" },
-        "url": { "raw": "http://localhost:3000/api/clients", "host": ["http://localhost:3000"], "path": ["api","clients"] }
-      }
-    },
-    {
-      "name": "Products - Create",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": { "mode": "raw", "raw": "{ \"name\": \"Mouse\", \"price\": 75000, \"stock\": 30 }" },
-        "url": { "raw": "http://localhost:3000/api/products", "host": ["http://localhost:3000"], "path": ["api","products"] }
-      }
-    },
-    {
-      "name": "Sales - Create (ejemplo)",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": {
-          "mode": "raw",
-          "raw": "{ \"client_id\": 1, \"products\": [{ \"product_id\": 1, \"quantity\": 2 }] }"
+      "name": "Clients",
+      "item": [
+        {
+          "name": "Clients - Create",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"name\": \"John Doe\", \"email\": \"john@example.com\", \"phone\": \"3219128803\" }" },
+            "url": { "raw": "http://localhost:3000/api/v1/clients", "host": ["http://localhost:3000"], "path": ["api","v1","clients"] }
+          }
         },
-        "url": { "raw": "http://localhost:3000/api/sales", "host": ["http://localhost:3000"], "path": ["api","sales"] }
-      }
+        {
+          "name": "Clients - List",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:3000/api/v1/clients", "host": ["http://localhost:3000"], "path": ["api","v1","clients"] } }
+        },
+        {
+          "name": "Clients - Get by ID",
+          "request": { "method": "GET", "url": { "raw": "http://localhost:3000/api/v1/clients/1", "host": ["http://localhost:3000"], "path": ["api","v1","clients","1"] } }
+        },
+        {
+          "name": "Clients - Update",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Juan Actualizado\" }" },
+            "url": { "raw": "http://localhost:3000/api/v1/clients/1", "host": ["http://localhost:3000"], "path": ["api","v1","clients","1"] }
+          }
+        },
+        {
+          "name": "Clients - Delete",
+          "request": { "method": "DELETE", "url": { "raw": "http://localhost:3000/api/v1/clients/1", "host": ["http://localhost:3000"], "path": ["api","v1","clients","1"] } }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Products - Create",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"name\": \"Mouse\", \"price\": 75000, \"stock\": 30 }" },
+            "url": { "raw": "http://localhost:3000/api/v1/products", "host": ["http://localhost:3000"], "path": ["api","v1","products"] }
+          }
+        },
+        { "name": "Products - List", "request": { "method": "GET", "url": { "raw": "http://localhost:3000/api/v1/products", "host": ["http://localhost:3000"], "path": ["api","v1","products"] } } },
+        { "name": "Products - Get by ID", "request": { "method": "GET", "url": { "raw": "http://localhost:3000/api/v1/products/1", "host": ["http://localhost:3000"], "path": ["api","v1","products","1"] } } },
+        {
+          "name": "Products - Update",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"price\": 80000 }" },
+            "url": { "raw": "http://localhost:3000/api/v1/products/1", "host": ["http://localhost:3000"], "path": ["api","v1","products","1"] }
+          }
+        },
+        { "name": "Products - Delete", "request": { "method": "DELETE", "url": { "raw": "http://localhost:3000/api/v1/products/1", "host": ["http://localhost:3000"], "path": ["api","v1","products","1"] } } }
+      ]
+    },
+    {
+      "name": "Sales",
+      "item": [
+        {
+          "name": "Sales - Create (ejemplo)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \"client_id\": 1, \"products\": [{ \"product_id\": 1, \"quantity\": 2 }] }"
+            },
+            "url": { "raw": "http://localhost:3000/api/v1/sales", "host": ["http://localhost:3000"], "path": ["api","v1","sales"] }
+          }
+        },
+        { "name": "Sales - List", "request": { "method": "GET", "url": { "raw": "http://localhost:3000/api/v1/sales", "host": ["http://localhost:3000"], "path": ["api","v1","sales"] } } },
+        { "name": "Sales - Get by ID", "request": { "method": "GET", "url": { "raw": "http://localhost:3000/api/v1/sales/1", "host": ["http://localhost:3000"], "path": ["api","v1","sales","1"] } } },
+        {
+          "name": "Sales - Update (replace products)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{ \"products\": [{ \"product_id\": 1, \"quantity\": 3 }] }" },
+            "url": { "raw": "http://localhost:3000/api/v1/sales/1", "host": ["http://localhost:3000"], "path": ["api","v1","sales","1"] }
+          }
+        },
+        { "name": "Sales - Delete", "request": { "method": "DELETE", "url": { "raw": "http://localhost:3000/api/v1/sales/1", "host": ["http://localhost:3000"], "path": ["api","v1","sales","1"] } } }
+      ]
     }
   ]
 }

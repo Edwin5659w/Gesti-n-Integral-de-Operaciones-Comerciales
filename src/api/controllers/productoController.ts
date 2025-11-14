@@ -15,6 +15,7 @@ export class ProductoController {
 
     obtenerTodos = async (_req: Request, res: Response) => {
         const productos = await this.service.obtenerProductos();
+        res.type('application/json');
         res.json(productos);
     };
 
@@ -22,6 +23,7 @@ export class ProductoController {
         const id = Number(req.params.id);
         const producto = await this.service.obtenerProductoPorId(id);
         if (!producto) return res.status(404).json({ error: 'Producto no encontrado' });
+        res.type('application/json');
         res.json(producto);
     };
 
@@ -29,7 +31,18 @@ export class ProductoController {
         try {
             const id = Number(req.params.id);
             const producto = await this.service.actualizarProducto(id, req.body);
+            res.type('application/json');
             res.json(producto);
+        } catch (err: any) {
+            res.status(400).json({ error: err.message });
+        }
+    };
+
+    eliminar = async (req: Request, res: Response) => {
+        try {
+            const id = Number(req.params.id);
+            await this.service.eliminarProducto(id);
+            res.status(204).send();
         } catch (err: any) {
             res.status(400).json({ error: err.message });
         }

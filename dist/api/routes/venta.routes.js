@@ -1,8 +1,9 @@
-import { Router } from 'express';
-import { VentaController } from '../controllers/ventaController';
-
-export default function createVentaRouter(controller: VentaController) {
-    const router = Router();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = createVentaRouter;
+const express_1 = require("express");
+function createVentaRouter(controller) {
+    const router = (0, express_1.Router)();
     // mounted at /api/sales
     router.post('/', controller.crear);
     router.get('/', controller.obtenerTodas);

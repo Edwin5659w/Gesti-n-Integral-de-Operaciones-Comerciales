@@ -19,4 +19,8 @@ export class ProductoService {
     async actualizarProducto(id: number, dto: ActualizarProductoDTO): Promise<Producto> {
         return this.repository.actualizar(id, dto);
     }
+
+    async eliminarProducto(id: number): Promise<void> {
+        return this.repository.eliminarProducto(id);
+    }
 }

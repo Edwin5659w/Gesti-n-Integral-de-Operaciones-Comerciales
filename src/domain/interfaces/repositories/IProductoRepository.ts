@@ -5,4 +5,5 @@ export interface IProductoRepository {
     obtenerTodos(): Promise<Producto[]>;
     obtenerPorId(id: number): Promise<Producto | null>;
     actualizar(id: number, producto: ActualizarProductoDTO): Promise<Producto>;
+    eliminarProducto(id: number): Promise<void>;
 }
