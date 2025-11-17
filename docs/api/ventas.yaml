@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  title: Ventas Service API
+  description: API para gestionar las operaciones de ventas.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3003/api
+paths:
+  /ventas:
+    get:
+      summary: Obtener todas las ventas
+      responses:
+        '200':
+          description: Lista de ventas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Venta'
+    post:
+      summary: Crear una nueva venta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Venta'
+      responses:
+        '201':
+          description: Venta creada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venta'
+  /ventas/{id}:
+    get:
+      summary: Obtener una venta por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la venta
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Venta encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venta'
+        '404':
+          description: Venta no encontrada
+    put:
+      summary: Actualizar una venta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la venta
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Venta'
+      responses:
+        '200':
+          description: Venta actualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Venta'
+        '404':
+          description: Venta no encontrada
+    delete:
+      summary: Eliminar una venta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la venta
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Venta eliminada
+        '404':
+          description: Venta no encontrada
+components:
+  schemas:
+    Venta:
+      type: object
+      properties:
+        id:
+          type: string
+        clienteId:
+          type: string
+        productoId:
+          type: string
+        cantidad:
+          type: integer
+        total:
+          type: number
+          format: float
+        fecha:
+          type: string
+          format: date-time

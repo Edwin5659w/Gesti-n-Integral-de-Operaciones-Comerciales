@@ -1,15 +1,36 @@
-@startuml Contexto del Sistema
-!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+@startuml
+!define RECTANGLE class
+!define PERSON actor
 
-Person(cliente, "Cliente", "Usuario que realiza compras")
-Person(vendedor, "Vendedor", "Usuario que gestiona ventas")
+RECTANGLE "Clientes Service" as clientesService {
+    + GET /clientes
+    + POST /clientes
+    + PUT /clientes/{id}
+    + DELETE /clientes/{id}
+}
 
-System(sistema, "Sistema de Gestión Comercial", "Permite gestionar clientes, productos y ventas")
+RECTANGLE "Productos Service" as productosService {
+    + GET /productos
+    + POST /productos
+    + PUT /productos/{id}
+    + DELETE /productos/{id}
+}
 
-System_Ext(facturacion, "Sistema de Facturación", "Genera facturas electrónicas")
+RECTANGLE "Ventas Service" as ventasService {
+    + GET /ventas
+    + POST /ventas
+    + PUT /ventas/{id}
+    + DELETE /ventas/{id}
+}
 
-Rel(cliente, sistema, "Consulta productos y realiza compras")
-Rel(vendedor, sistema, "Gestiona inventario y procesa ventas")
-Rel(sistema, facturacion, "Envía datos para facturación")
+PERSON "Usuario" as usuario
+
+usuario --> clientesService : Interactúa
+usuario --> productosService : Interactúa
+usuario --> ventasService : Interactúa
+
+clientesService --> productosService : Solicita información de productos
+ventasService --> clientesService : Verifica información del cliente
+ventasService --> productosService : Verifica disponibilidad de productos
 
 @enduml

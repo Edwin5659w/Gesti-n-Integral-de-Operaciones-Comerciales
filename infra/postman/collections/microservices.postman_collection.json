@@ -1,0 +1,114 @@
+{
+  "info": {
+    "name": "Microservicios Gestión Integral",
+    "description": "Colección de Postman para probar los endpoints de los microservicios de Clientes, Productos e Ventas.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Clientes Service",
+      "item": [
+        {
+          "name": "Crear Cliente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\": \"Juan Pérez\", \"email\": \"juan@example.com\"}"
+            },
+            "url": {
+              "raw": "{{clientes_service_url}}/clientes",
+              "host": ["{{clientes_service_url}}"],
+              "path": ["clientes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Cliente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{clientes_service_url}}/clientes/{{cliente_id}}",
+              "host": ["{{clientes_service_url}}"],
+              "path": ["clientes", "{{cliente_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Productos Service",
+      "item": [
+        {
+          "name": "Crear Producto",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"nombre\": \"Producto A\", \"precio\": 100}"
+            },
+            "url": {
+              "raw": "{{productos_service_url}}/productos",
+              "host": ["{{productos_service_url}}"],
+              "path": ["productos"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Producto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{productos_service_url}}/productos/{{producto_id}}",
+              "host": ["{{productos_service_url}}"],
+              "path": ["productos", "{{producto_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Ventas Service",
+      "item": [
+        {
+          "name": "Registrar Venta",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"clienteId\": \"{{cliente_id}}\", \"productoId\": \"{{producto_id}}\", \"cantidad\": 2}"
+            },
+            "url": {
+              "raw": "{{ventas_service_url}}/ventas",
+              "host": ["{{ventas_service_url}}"],
+              "path": ["ventas"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Venta",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{ventas_service_url}}/ventas/{{venta_id}}",
+              "host": ["{{ventas_service_url}}"],
+              "path": ["ventas", "{{venta_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

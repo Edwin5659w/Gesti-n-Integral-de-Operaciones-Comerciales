@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  clientes-service:
+    build:
+      context: ./services/clientes-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - microservices-network
+
+  productos-service:
+    build:
+      context: ./services/productos-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - microservices-network
+
+  ventas-service:
+    build:
+      context: ./services/ventas-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge
