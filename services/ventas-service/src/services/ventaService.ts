@@ -2,8 +2,8 @@ import axios from 'axios';
 import { VentaRepository } from '../repositories/ventaRepository';
 import { VentaItem } from '../models/Venta';
 
-const CLIENTS_BASE = process.env.CLIENTS_URL || 'http://localhost:3001/api/v1/clients';
-const PRODUCTS_BASE = process.env.PRODUCTS_URL || 'http://localhost:3002/api/v1/products';
+const CLIENTS_BASE = process.env.CLIENTS_URL || 'http://clientes-service:3000/api/v1/clients';
+const PRODUCTS_BASE = process.env.PRODUCTS_URL || 'http://productos-service:3000/api/v1/products';
 
 export class VentaService {
   repo = new VentaRepository();

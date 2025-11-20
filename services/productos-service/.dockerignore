@@ -1,0 +1,28 @@
+# Node.js
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de compilación temporales
+dist
+build
+coverage
+
+# Configuración de IDE
+.vscode
+.idea
+
+# Otros
+Dockerfile
+docker-compose.yml
+README.md
+# TypeScript build artifacts
+dist
+build
+*.tsbuildinfo

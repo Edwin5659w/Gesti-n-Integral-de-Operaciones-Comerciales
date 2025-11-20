@@ -8,12 +8,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:3000"
-    environment:
-      - NODE_ENV=production
-      - DB_HOST=clientes-db
-      - DB_USER=root
-      - DB_PASSWORD=secret
-      - DB_NAME=clientes
     networks:
       - microservices-network
     depends_on:
@@ -22,9 +16,6 @@ services:
   clientes-db:
     image: mysql:8.0
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=clientes
     volumes:
       - clientes-data:/var/lib/mysql
     networks:
@@ -37,12 +28,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3002:3000"
-    environment:
-      - NODE_ENV=production
-      - DB_HOST=productos-db
-      - DB_USER=root
-      - DB_PASSWORD=secret
-      - DB_NAME=productos
     networks:
       - microservices-network
     depends_on:
@@ -51,9 +36,6 @@ services:
   productos-db:
     image: mysql:8.0
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=productos
     volumes:
       - productos-data:/var/lib/mysql
     networks:
@@ -66,12 +48,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3003:3000"
-    environment:
-      - NODE_ENV=production
-      - DB_HOST=ventas-db
-      - DB_USER=root
-      - DB_PASSWORD=secret
-      - DB_NAME=ventas
     networks:
       - microservices-network
     depends_on:
@@ -80,9 +56,6 @@ services:
   ventas-db:
     image: mysql:8.0
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=ventas
     volumes:
       - ventas-data:/var/lib/mysql
     networks:
