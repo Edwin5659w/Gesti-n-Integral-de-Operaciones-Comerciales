@@ -1,42 +1,32 @@
-import { Producto } from '../type/Producto';
-import { ProductModel } from '../model/productoModel';
-
-
-let productos: Producto[] = [];
-let nextId = 1;
+// src/repositories/productoRepository.ts
+import { Producto } from "../type/Producto";
+import { ProductoModel } from "../model/productoModel";
 
 export class ProductoRepository {
-  async create(data: Omit<Producto, 'id' | 'created_at'>) {
-    const p: Producto = { 
-      id: nextId++, 
-      created_at: new Date().toISOString(), 
-      ...data 
-    };
-    productos.push(p);
-    return p;
+  async findAllProductos(): Promise<Producto[]> {
+    const productos = await ProductoModel.findAll();
+    return productos.map(p => p.toJSON() as Producto);
   }
 
-  async findAll(): Promise<Producto[]> {
-    const productos = await ProductModel.findAll();
-    return productos.map(j => j.toJSON() as Producto);
+  async findProductoById(id: number): Promise<Producto | null> {
+    const producto = await ProductoModel.findByPk(id);
+    return producto ? (producto.toJSON() as Producto) : null;
   }
 
-  async findById(id: number) {
-    return productos.find(p => p.id === id) || null;
+  async createProducto(data: Omit<Producto, "id" | "created_at">): Promise<Producto> {
+    const newProducto = await ProductoModel.create(data);
+    return newProducto.toJSON() as Producto;
   }
 
-  async update(id: number, patch: Partial<Producto>) {
-    const idx = productos.findIndex(p => p.id === id);
-    if (idx === -1) return null;
-    productos[idx] = { ...productos[idx], ...patch };
-    return productos[idx];
+  async updateProducto(id: number, data: Partial<Producto>): Promise<Producto | null> {
+    const producto = await ProductoModel.findByPk(id);
+    if (!producto) return null;
+    await producto.update(data);
+    return producto.toJSON() as Producto;
   }
 
-  async remove(id: number) {
-    const idx = productos.findIndex(p => p.id === id);
-    if (idx === -1) return false;
-    productos.splice(idx, 1);
-    return true;
+  async deleteProducto(id: number): Promise<boolean> {
+    const deleted = await ProductoModel.destroy({ where: { id } });
+    return deleted > 0;
   }
-
 }

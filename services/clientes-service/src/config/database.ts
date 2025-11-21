@@ -1,17 +1,15 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
+import { ClienteModel } from '../models/clienteModel';
 
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+const sequelize = new Sequelize({
+  database: process.env.DB_NAME,
+  dialect: 'mysql',
   host: process.env.DB_HOST,
-  dialect: 'mysql', // o 'postgres', 'sqlite', etc.
+  password: process.env.DB_PASSWORD,
+  username: process.env.DB_USER,
+  models: [ClienteModel],
 });
 
-const testConnection = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection to the database has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-};
 
-export { sequelize, testConnection };
+
+export { sequelize };

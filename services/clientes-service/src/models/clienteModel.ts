@@ -1,10 +1,10 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
-  tableName: 'productos',
-  timestamps: true, 
+  tableName: 'clientes',
+  timestamps: false, // ponlo en true si quieres que Sequelize maneje createdAt/updatedAt automáticamente
 })
-export class ProductoModel extends Model {
+export class ClienteModel extends Model {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -18,20 +18,17 @@ export class ProductoModel extends Model {
   })
   nombre!: string;
 
-  @Column(DataType.STRING)
-  descripcion?: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  email?: string;
 
   @Column({
-    type: DataType.FLOAT,
-    allowNull: false,
+    type: DataType.STRING,
+    allowNull: true,
   })
-  precio!: number;
-
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: false,
-  })
-  stock!: number;
+  telefono?: string;
 
   @Column({
     type: DataType.DATE,

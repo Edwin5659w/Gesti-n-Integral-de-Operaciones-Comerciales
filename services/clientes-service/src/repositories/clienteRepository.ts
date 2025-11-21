@@ -1,38 +1,32 @@
-import { Cliente } from '../models/Cliente';
-
-let clientes: Cliente[] = [];
-let nextId = 1;
+// src/repositories/clienteRepository.ts
+import { Cliente } from "../type/Cliente";
+import { ClienteModel } from "../models/clienteModel";
 
 export class ClienteRepository {
-  async create(data: Omit<Cliente, 'id' | 'created_at'>) {
-    const c: Cliente = { 
-      id: nextId++, 
-      created_at: new Date().toISOString(), 
-      ...data 
-    };
-    clientes.push(c);
-    return c;
+  async findAllClientes(): Promise<Cliente[]> {
+    const clientes = await ClienteModel.findAll();
+    return clientes.map(c => c.toJSON() as Cliente);
   }
 
-  async findAll() {
-    return clientes;
+  async findClienteById(id: number): Promise<Cliente | null> {
+    const cliente = await ClienteModel.findByPk(id);
+    return cliente ? (cliente.toJSON() as Cliente) : null;
   }
 
-  async findById(id: number) {
-    return clientes.find(c => c.id === id) || null;
+  async createCliente(data: Omit<Cliente, "id" | "created_at">): Promise<Cliente> {
+    const newCliente = await ClienteModel.create(data);
+    return newCliente.toJSON() as Cliente;
   }
 
-  async update(id: number, patch: Partial<Cliente>) {
-    const idx = clientes.findIndex(c => c.id === id);
-    if (idx === -1) return null;
-    clientes[idx] = { ...clientes[idx], ...patch };
-    return clientes[idx];
+  async updateCliente(id: number, data: Partial<Cliente>): Promise<Cliente | null> {
+    const cliente = await ClienteModel.findByPk(id);
+    if (!cliente) return null;
+    await cliente.update(data);
+    return cliente.toJSON() as Cliente;
   }
 
-  async remove(id: number) {
-    const idx = clientes.findIndex(c => c.id === id);
-    if (idx === -1) return false;
-    clientes.splice(idx, 1);
-    return true;
+  async deleteCliente(id: number): Promise<boolean> {
+    const deleted = await ClienteModel.destroy({ where: { id } });
+    return deleted > 0;
   }
 }

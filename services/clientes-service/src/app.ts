@@ -1,17 +1,16 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import clienteRoutes from './routes/cliente.routes';
+import clienteController from './controllers/clienteController'
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 const swaggerDocument = YAML.load('./docs/api/clientes.yaml');
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'OK', service: 'clientes-service' }));
 
-app.use('/api/v1/clients', swaggerUi.serve, swaggerUi.setup(swaggerDocument), clienteRoutes);
+app.use('/api/v1/clients', swaggerUi.serve, swaggerUi.setup(swaggerDocument), clienteController);
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3001;
 app.listen(PORT, () => {
