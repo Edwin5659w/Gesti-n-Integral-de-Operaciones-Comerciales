@@ -2,7 +2,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
   tableName: 'productos',
-  timestamps: true, 
+  timestamps: false, 
 })
 export class ProductoModel extends Model {
   @Column({
@@ -36,6 +36,7 @@ export class ProductoModel extends Model {
   @Column({
     type: DataType.DATE,
     allowNull: false,
+    defaultValue: DataType.NOW,
   })
   created_at!: Date;
 }

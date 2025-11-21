@@ -1,6 +1,6 @@
 import { Table, Column, Model, DataType, HasMany, ForeignKey } from 'sequelize-typescript';
 
-@Table({ tableName: 'ventas', timestamps: true })
+@Table({ tableName: 'ventas', timestamps: false })
 export class VentaModel extends Model {
   @Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
   id!: number;
@@ -14,7 +14,7 @@ export class VentaModel extends Model {
   total!: number;
 
   // Fecha de creación; en el DTO puedes mapearlo a string ISO
-  @Column({ type: DataType.DATE, allowNull: false })
+  @Column({ type: DataType.DATE, allowNull: false, defaultValue: DataType.NOW })
   created_at!: Date;
 
   // Relación interna: una venta tiene muchos ítems

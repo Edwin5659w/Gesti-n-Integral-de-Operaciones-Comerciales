@@ -2,7 +2,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
   tableName: 'clientes',
-  timestamps: false, // ponlo en true si quieres que Sequelize maneje createdAt/updatedAt automáticamente
+  timestamps: false, 
 })
 export class ClienteModel extends Model {
   @Column({
@@ -33,6 +33,7 @@ export class ClienteModel extends Model {
   @Column({
     type: DataType.DATE,
     allowNull: false,
+    defaultValue: DataType.NOW,
   })
   created_at!: Date;
 }

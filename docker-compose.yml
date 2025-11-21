@@ -5,7 +5,7 @@ services:
       context: ./services/clientes-service
       dockerfile: Dockerfile
     env_file:
-      - ./service/clientes-service/.env
+      - ./services/clientes-service/.env
     ports:
       - "3001:3000"
     networks:
@@ -18,7 +18,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: productos
+      MYSQL_DATABASE: clientes
     volumes:
       - clientes-data:/var/lib/mysql
     networks:
@@ -30,7 +30,7 @@ services:
       context: ./services/productos-service
       dockerfile: Dockerfile
     env_file:
-      - ./service/productos-service/.env
+      - ./services/productos-service/.env
     ports:
       - "3002:3000"
     networks:
@@ -55,7 +55,7 @@ services:
       context: ./services/ventas-service
       dockerfile: Dockerfile
     env_file:
-      - ./service/ventas-service/.env
+      - ./services/ventas-service/.env
     ports:
       - "3003:3000"
     networks:
@@ -68,7 +68,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: productos
+      MYSQL_DATABASE: ventas
     volumes:
       - ventas-data:/var/lib/mysql
     networks:

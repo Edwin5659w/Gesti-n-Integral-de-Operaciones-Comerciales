@@ -2,10 +2,24 @@ import express from 'express';
 import clienteController from './controllers/clienteController'
 import swaggerUi from 'swagger-ui-express';
 import YAML from 'yamljs';
+import { sequelize } from './config/database';
+
+async function bootstrap() {
+  try {
+    await sequelize.authenticate();
+    await sequelize.sync(); // opcional, sincroniza modelos con la BD
+    console.log('DB connected');
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+}
+
+bootstrap();
+
 
 const app = express();
 app.use(express.json());
-const swaggerDocument = YAML.load('../docs/api/clientes.yaml');
+const swaggerDocument = YAML.load('./docs/api/clientes.yaml');
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'OK', service: 'clientes-service' }));
