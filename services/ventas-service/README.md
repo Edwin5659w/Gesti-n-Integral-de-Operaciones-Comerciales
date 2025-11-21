@@ -1,65 +1,37 @@
 # Ventas Service
 
-Este microservicio se encarga de gestionar las operaciones relacionadas con las ventas en el sistema de gestión integral. A continuación se detallan las características y funcionalidades del servicio.
+Microservicio encargado de la **gestión de ventas** dentro del sistema de Gestión Integral de Operaciones Comerciales.  
+Forma parte de la arquitectura basada en microservicios junto con **Clientes Service** y **Productos Service**.
 
-## Estructura del Proyecto
+---
 
-- **src/**: Contiene el código fuente del microservicio.
-  - **app.ts**: Punto de entrada del microservicio, donde se configura el servidor Express y las rutas.
-  - **controllers/**: Contiene los controladores que manejan la lógica de las operaciones de ventas.
-    - **ventaController.ts**: Controlador para manejar las operaciones relacionadas con las ventas.
-  - **routes/**: Define las rutas del microservicio y las asocia con los métodos del controlador.
-    - **venta.routes.ts**: Rutas para las operaciones de ventas.
-  - **services/**: Contiene la lógica de negocio relacionada con las ventas.
-    - **ventaService.ts**: Servicio que maneja la lógica de negocio para las ventas.
-  - **repositories/**: Maneja la interacción con la base de datos para las entidades de venta.
-    - **ventaRepository.ts**: Repositorio para las operaciones de base de datos relacionadas con las ventas.
-  - **models/**: Define los modelos que representan la estructura de los datos.
-    - **Venta.ts**: Modelo que representa una venta.
-  - **config/**: Configuración del microservicio.
-    - **database.ts**: Configura la conexión a la base de datos.
+## 🚀 Características principales
+- CRUD completo de ventas:
+  - `POST /api/v1/sales` → Registrar venta
+  - `GET /api/v1/sales/:id` → Obtener venta por ID
+  - `PUT /api/v1/sales/:id` → Actualizar venta
+  - `DELETE /api/v1/sales/:id` → Eliminar venta
+- Validación de datos mediante DTOs y middlewares.
+- Persistencia en base de datos MySQL (contenedor dedicado).
+- Comunicación **únicamente vía HTTP** con otros microservicios (no comparte DB).
+- Documentación disponible en **Swagger** (`/api-docs`).
 
-## Instalación
+---
 
-1. Clona el repositorio:
-   ```
-   git clone <url-del-repositorio>
-   ```
+## 🛠️ Tecnologías utilizadas
+- **Node.js** + **Express**
+- **TypeScript**
+- **Sequelize ORM**
+- **MySQL** (contenedor independiente)
+- **Docker Compose** (orquestación)
+- **Swagger UI** (documentación)
 
-2. Navega al directorio del microservicio de ventas:
-   ```
-   cd services/ventas-service
-   ```
+---
 
-3. Instala las dependencias:
-   ```
-   npm install
-   ```
+## 🔗 Integración con otros servicios
 
-## Ejecución
+* **Clientes Service**: este microservicio consulta a Clientes para validar la existencia del cliente antes de registrar una venta.
 
-Para ejecutar el microservicio, utiliza el siguiente comando:
-```
-npm start
-```
+* **Productos Service**: este microservicio consulta a Productos para verificar la disponibilidad del producto antes de registrar la transacción.
 
-El microservicio estará disponible en `http://localhost:3000`.
-
-## Pruebas
-
-Las pruebas unitarias e integración se encuentran en el directorio `tests/`. Para ejecutar las pruebas, utiliza:
-```
-npm test
-```
-
-## Comunicación entre Microservicios
-
-Este microservicio se comunica con otros microservicios (Clientes y Productos) a través de llamadas HTTP. Asegúrate de que los otros microservicios estén en ejecución para realizar pruebas de integración.
-
-## Contribuciones
-
-Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o un pull request en el repositorio.
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT.
+* No accede directamente a las bases de datos de Clientes ni de Productos, solo vía HTTP.

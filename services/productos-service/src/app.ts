@@ -10,13 +10,18 @@ const swaggerDocument = YAML.load('./docs/api/productos.yaml');
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'OK', service: 'productos-service' }));
 
-app.use('/api/v1/products', swaggerUi.serve, swaggerUi.setup(swaggerDocument), productoController);
+app.use('/api/v1/products', productoController);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3002;
 app.listen(PORT, () => {
   console.log(`✓ Productos service running on http://localhost:${PORT}`);
-  console.log(`  Endpoints: GET/POST /api/v1/products | GET/PUT/DELETE /api/v1/products/:id`);
-  console.log(`  Reserve: POST /api/v1/products/:id/reserve`);
+  console.log(`  Endpoints:`);
+  console.log(`    GET    /api/v1/products`);
+  console.log(`    POST   /api/v1/products`);
+  console.log(`    GET    /api/v1/products/:id`);
+  console.log(`  Swagger docs: http://localhost:${PORT}/api-docs`);
+  
 });
 
 export default app;

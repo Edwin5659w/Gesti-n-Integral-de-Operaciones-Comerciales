@@ -25,12 +25,12 @@ RECTANGLE "Ventas Service" as ventasService {
 
 PERSON "Usuario" as usuario
 
-usuario --> clientesService : Interactúa
-usuario --> productosService : Interactúa
-usuario --> ventasService : Interactúa
+' El usuario interactúa con todos los microservicios
+usuario --> clientesService : Interactúa vía REST
+usuario --> productosService : Interactúa vía REST
+usuario --> ventasService : Interactúa vía REST
 
-clientesService --> productosService : Solicita información de productos
-ventasService --> clientesService : Verifica información del cliente
-ventasService --> productosService : Verifica disponibilidad de productos
-
+' Ventas valida datos vía HTTP, no accede directo a DB
+ventasService --> clientesService : Verifica cliente (HTTP)
+ventasService --> productosService : Verifica producto (HTTP)
 @enduml

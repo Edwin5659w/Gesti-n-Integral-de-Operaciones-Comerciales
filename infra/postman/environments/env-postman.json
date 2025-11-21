@@ -1,0 +1,37 @@
+{
+  "id": "microservicios-gestion-integral-nginx-env",
+  "name": "Microservicios Gestión Integral (Nginx Gateway)",
+  "values": [
+    {
+      "key": "clientes_service_url",
+      "value": "http://localhost:8080/api/v1/clients",
+      "enabled": true
+    },
+    {
+      "key": "productos_service_url",
+      "value": "http://localhost:8080/api/v1/products",
+      "enabled": true
+    },
+    {
+      "key": "ventas_service_url",
+      "value": "http://localhost:8080/api/v1/sales",
+      "enabled": true
+    },
+    {
+      "key": "cliente_id",
+      "value": "1",
+      "enabled": true
+    },
+    {
+      "key": "producto_id",
+      "value": "1",
+      "enabled": true
+    },
+    {
+      "key": "venta_id",
+      "value": "1",
+      "enabled": true
+    }
+  ],
+  "schema": "https://schema.getpostman.com/json/environment/v2.1.0/environment.json"
+}

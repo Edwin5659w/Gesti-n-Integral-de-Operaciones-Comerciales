@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Microservicios Gestión Integral",
-    "description": "Colección de Postman para probar los endpoints de los microservicios de Clientes, Productos e Ventas.",
+    "description": "Colección de Postman para probar los endpoints de los microservicios de Clientes, Productos y Ventas.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -15,12 +15,12 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\"nombre\": \"Juan Pérez\", \"email\": \"juan@example.com\"}"
+              "raw": "{ \"nombre\": \"Juan Pérez\", \"email\": \"juan@example.com\" }"
             },
             "url": {
-              "raw": "{{clientes_service_url}}/clientes",
+              "raw": "{{clientes_service_url}}/api/v1/clientes",
               "host": ["{{clientes_service_url}}"],
-              "path": ["clientes"]
+              "path": ["api", "v1", "clientes"]
             }
           },
           "response": []
@@ -31,9 +31,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{clientes_service_url}}/clientes/{{cliente_id}}",
+              "raw": "{{clientes_service_url}}/api/v1/clientes/{{cliente_id}}",
               "host": ["{{clientes_service_url}}"],
-              "path": ["clientes", "{{cliente_id}}"]
+              "path": ["api", "v1", "clientes", "{{cliente_id}}"]
             }
           },
           "response": []
@@ -50,12 +50,12 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\"nombre\": \"Producto A\", \"precio\": 100}"
+              "raw": "{ \"nombre\": \"Producto A\", \"precio\": 100, \"stock\": 50 }"
             },
             "url": {
-              "raw": "{{productos_service_url}}/productos",
+              "raw": "{{productos_service_url}}/api/v1/productos",
               "host": ["{{productos_service_url}}"],
-              "path": ["productos"]
+              "path": ["api", "v1", "productos"]
             }
           },
           "response": []
@@ -66,9 +66,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{productos_service_url}}/productos/{{producto_id}}",
+              "raw": "{{productos_service_url}}/api/v1/productos/{{producto_id}}",
               "host": ["{{productos_service_url}}"],
-              "path": ["productos", "{{producto_id}}"]
+              "path": ["api", "v1", "productos", "{{producto_id}}"]
             }
           },
           "response": []
@@ -85,12 +85,12 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\"clienteId\": \"{{cliente_id}}\", \"productoId\": \"{{producto_id}}\", \"cantidad\": 2}"
+              "raw": "{ \"client_id\": \"{{cliente_id}}\", \"items\": [ { \"product_id\": \"{{producto_id}}\", \"cantidad\": 2 } ] }"
             },
             "url": {
-              "raw": "{{ventas_service_url}}/ventas",
+              "raw": "{{ventas_service_url}}/api/v1/sales",
               "host": ["{{ventas_service_url}}"],
-              "path": ["ventas"]
+              "path": ["api", "v1", "sales"]
             }
           },
           "response": []
@@ -101,9 +101,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{ventas_service_url}}/ventas/{{venta_id}}",
+              "raw": "{{ventas_service_url}}/api/v1/sales/{{venta_id}}",
               "host": ["{{ventas_service_url}}"],
-              "path": ["ventas", "{{venta_id}}"]
+              "path": ["api", "v1", "sales", "{{venta_id}}"]
             }
           },
           "response": []
