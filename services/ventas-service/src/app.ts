@@ -1,14 +1,16 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import ventaRoutes from './routes/venta.routes';
+import ventaController from './controllers/ventaController';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
+const swaggerDocument = YAML.load('./docs/api/productos.yaml');
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'OK', service: 'ventas-service' }));
 
-app.use('/api/v1/sales', ventaRoutes);
+app.use('/api/v1/sales', swaggerUi.serve, swaggerUi.setup(swaggerDocument), ventaController);
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3003;
 app.listen(PORT, () => {

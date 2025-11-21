@@ -1,17 +1,14 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
+import { VentaModel, VentaItemModel } from '../models/Venta';
 
-const sequelize = new Sequelize(process.env.DB_NAME || 'ventas_db', process.env.DB_USER || 'root', process.env.DB_PASSWORD || '', {
-    host: process.env.DB_HOST || 'localhost',
+const sequelize = new Sequelize({
+    database: process.env.DB_NAME,
     dialect: 'mysql',
+    host: process.env.DB_HOST,
+    password: process.env.DB_PASSWORD,
+    username: process.env.DB_USER,
+    models: [VentaItemModel, VentaModel],
 });
 
-const testConnection = async () => {
-    try {
-        await sequelize.authenticate();
-        console.log('Connection to the database has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
-};
 
-export { sequelize, testConnection };
+export { sequelize};
