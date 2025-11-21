@@ -1,4 +1,6 @@
-import { Producto } from '../models/Producto';
+import { Producto } from '../type/Producto';
+import { ProductModel } from '../model/productoModel';
+
 
 let productos: Producto[] = [];
 let nextId = 1;
@@ -14,8 +16,9 @@ export class ProductoRepository {
     return p;
   }
 
-  async findAll() {
-    return productos;
+  async findAll(): Promise<Producto[]> {
+    const productos = await ProductModel.findAll();
+    return productos.map(j => j.toJSON() as Producto);
   }
 
   async findById(id: number) {
@@ -36,13 +39,4 @@ export class ProductoRepository {
     return true;
   }
 
-  // Método para reservar stock (usado por ventas-service)
-  async reserveStock(id: number, quantity: number) {
-    const p = productos.find(prod => prod.id === id);
-    if (!p) return { ok: false, reason: 'not_found' };
-    if (p.stock < quantity) return { ok: false, reason: 'insufficient_stock' };
-    
-    p.stock -= quantity;
-    return { ok: true, product: p };
-  }
 }

@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Compilación / cobertura
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# IDE / configuración local
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Docker y otros artefactos
+Dockerfile
+docker-compose.yml
+
+# Tests
+/jest-cache/
+/jest-results/
+/coverage/
+
+# Mac / OS
+.DS_Store
+Thumbs.db

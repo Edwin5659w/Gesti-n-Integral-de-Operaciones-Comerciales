@@ -1,14 +1,16 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import productoRoutes from './routes/producto.routes';
+import productoController from './controllers/productoController'
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
+const swaggerDocument = YAML.load('./docs/api/productos.yaml');
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'OK', service: 'productos-service' }));
 
-app.use('/api/v1/products', productoRoutes);
+app.use('/api/v1/products', swaggerUi.serve, swaggerUi.setup(swaggerDocument), productoController);
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3002;
 app.listen(PORT, () => {

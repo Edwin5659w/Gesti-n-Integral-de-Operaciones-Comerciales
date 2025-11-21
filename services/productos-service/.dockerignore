@@ -4,7 +4,7 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 
-# Archivos de entorno
+# Archivos de entorno (no deben ir al contenedor)
 .env
 .env.local
 .env.*.local
@@ -18,11 +18,13 @@ coverage
 .vscode
 .idea
 
-# Otros
+# Otros innecesarios para la imagen
+README.md
 Dockerfile
 docker-compose.yml
-README.md
+
 # TypeScript build artifacts
-dist
-build
 *.tsbuildinfo
+
+# Logs
+*.log

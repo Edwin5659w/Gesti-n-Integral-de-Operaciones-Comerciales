@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
-import { Producto } from '../models/Producto';
+import { ProductModel } from '../model/productoModel';
 
 const sequelize = new Sequelize({
   database: process.env.DB_NAME,
@@ -7,7 +7,7 @@ const sequelize = new Sequelize({
   host: process.env.DB_HOST,
   password: process.env.DB_PASSWORD,
   username: process.env.DB_USER,
-  models: [Producto],
+  models: [ProductModel],
 });
 
 export default sequelize;

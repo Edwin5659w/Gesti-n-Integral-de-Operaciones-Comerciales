@@ -1,8 +1,8 @@
-export type Producto = {
-  id: number;
+export interface Producto  {
+  id?: number;
   nombre: string;
   descripcion?: string;
   precio: number;
   stock: number;
-  created_at: string;
+  created_at?: string;
 };
