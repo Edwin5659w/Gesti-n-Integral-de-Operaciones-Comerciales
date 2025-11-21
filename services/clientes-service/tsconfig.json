@@ -7,8 +7,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*", "src/type/Cliente.d.ts"],
+  "include": ["src/**/*", "docs/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

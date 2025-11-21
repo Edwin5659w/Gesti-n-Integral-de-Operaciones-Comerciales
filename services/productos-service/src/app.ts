@@ -5,7 +5,7 @@ import YAML from 'yamljs';
 
 const app = express();
 app.use(express.json());
-const swaggerDocument = YAML.load('./docs/api/productos.yaml');
+const swaggerDocument = YAML.load('../docs/api/productos.yaml');
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'OK', service: 'productos-service' }));

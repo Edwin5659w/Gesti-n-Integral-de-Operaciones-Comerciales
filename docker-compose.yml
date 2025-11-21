@@ -1,11 +1,11 @@
-version: '3.8'
-
 services:
   # --- Clientes ---
   clientes-service:
     build:
       context: ./services/clientes-service
       dockerfile: Dockerfile
+    env_file:
+      - ./service/clientes-service/.env
     ports:
       - "3001:3000"
     networks:
@@ -16,6 +16,9 @@ services:
   clientes-db:
     image: mysql:8.0
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: productos
     volumes:
       - clientes-data:/var/lib/mysql
     networks:
@@ -26,6 +29,8 @@ services:
     build:
       context: ./services/productos-service
       dockerfile: Dockerfile
+    env_file:
+      - ./service/productos-service/.env
     ports:
       - "3002:3000"
     networks:
@@ -36,6 +41,9 @@ services:
   productos-db:
     image: mysql:8.0
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: productos
     volumes:
       - productos-data:/var/lib/mysql
     networks:
@@ -46,6 +54,8 @@ services:
     build:
       context: ./services/ventas-service
       dockerfile: Dockerfile
+    env_file:
+      - ./service/ventas-service/.env
     ports:
       - "3003:3000"
     networks:
@@ -56,25 +66,29 @@ services:
   ventas-db:
     image: mysql:8.0
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: productos
     volumes:
       - ventas-data:/var/lib/mysql
     networks:
       - microservices-network
 
+  # nginx para servir
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:80"
+    depends_on:
+      - clientes-service
+      - productos-service
+      - ventas-service
+    networks:
+      - microservices-network
 
-# nginx para servir
-nginx:
-  image: nginx:latest
-  volumes:
-    - ./infra/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-  ports:
-    - "8080:80"
-  depends_on:
-    - clientes-service
-    - productos-service
-    - ventas-service
-  networks:
-    - microservices-network
+
 
 
 # --- Redes y volúmenes ---

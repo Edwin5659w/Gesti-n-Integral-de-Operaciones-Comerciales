@@ -5,7 +5,7 @@ import YAML from 'yamljs';
 
 const app = express();
 app.use(express.json());
-const swaggerDocument = YAML.load('./docs/api/clientes.yaml');
+const swaggerDocument = YAML.load('../docs/api/clientes.yaml');
 
 // Health check
 app.get('/health', (_req, res) => res.json({ status: 'OK', service: 'clientes-service' }));
