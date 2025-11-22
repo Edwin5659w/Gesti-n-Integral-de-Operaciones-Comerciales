@@ -1,36 +1,40 @@
 @startuml
-!define RECTANGLE class
-!define PERSON actor
+actor Usuario
 
-RECTANGLE "Clientes Service" as clientesService {
-    + GET /clientes
-    + POST /clientes
-    + PUT /clientes/{id}
-    + DELETE /clientes/{id}
+' ============================
+' Contenedor Docker
+' ============================
+node "Docker Container" {
+    component "Nginx" as nginx
+
+    component "Clientes Service" as clientesService
+    database "Clientes DB" as clientesDB
+
+    component "Productos Service" as productosService
+    database "Productos DB" as productosDB
+
+    component "Ventas Service" as ventasService
+    database "Ventas DB" as ventasDB
+
+    ' ============================
+    ' Flujo principal de interacción
+    ' ============================
+    Usuario --> nginx
+    nginx --> clientesService
+    nginx --> productosService
+    nginx --> ventasService
+
+    ' ============================
+    ' Validaciones internas de Ventas
+    ' ============================
+    ventasService --> clientesService : Verifica cliente (HTTP)
+    ventasService --> productosService : Verifica producto (HTTP)
+
+    ' ============================
+    ' Acceso a bases de datos propias
+    ' ============================
+    clientesService --> clientesDB
+    productosService --> productosDB
+    ventasService --> ventasDB
 }
-
-RECTANGLE "Productos Service" as productosService {
-    + GET /productos
-    + POST /productos
-    + PUT /productos/{id}
-    + DELETE /productos/{id}
-}
-
-RECTANGLE "Ventas Service" as ventasService {
-    + GET /ventas
-    + POST /ventas
-    + PUT /ventas/{id}
-    + DELETE /ventas/{id}
-}
-
-PERSON "Usuario" as usuario
-
-' El usuario interactúa con todos los microservicios
-usuario --> clientesService : Interactúa vía REST
-usuario --> productosService : Interactúa vía REST
-usuario --> ventasService : Interactúa vía REST
-
-' Ventas valida datos vía HTTP, no accede directo a DB
-ventasService --> clientesService : Verifica cliente (HTTP)
-ventasService --> productosService : Verifica producto (HTTP)
 @enduml
