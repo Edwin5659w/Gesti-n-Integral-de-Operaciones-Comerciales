@@ -1,114 +1,462 @@
 {
-  "info": {
-    "name": "Microservicios Gestión Integral",
-    "description": "Colección de Postman para probar los endpoints de los microservicios de Clientes, Productos y Ventas.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Clientes Service",
-      "item": [
-        {
-          "name": "Crear Cliente",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{ \"nombre\": \"Juan Pérez\", \"email\": \"juan@example.com\" }"
-            },
-            "url": {
-              "raw": "{{clientes_service_url}}/api/v1/clientes",
-              "host": ["{{clientes_service_url}}"],
-              "path": ["api", "v1", "clientes"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Obtener Cliente",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{clientes_service_url}}/api/v1/clientes/{{cliente_id}}",
-              "host": ["{{clientes_service_url}}"],
-              "path": ["api", "v1", "clientes", "{{cliente_id}}"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Productos Service",
-      "item": [
-        {
-          "name": "Crear Producto",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{ \"nombre\": \"Producto A\", \"precio\": 100, \"stock\": 50 }"
-            },
-            "url": {
-              "raw": "{{productos_service_url}}/api/v1/productos",
-              "host": ["{{productos_service_url}}"],
-              "path": ["api", "v1", "productos"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Obtener Producto",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{productos_service_url}}/api/v1/productos/{{producto_id}}",
-              "host": ["{{productos_service_url}}"],
-              "path": ["api", "v1", "productos", "{{producto_id}}"]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Ventas Service",
-      "item": [
-        {
-          "name": "Registrar Venta",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{ \"client_id\": \"{{cliente_id}}\", \"items\": [ { \"product_id\": \"{{producto_id}}\", \"cantidad\": 2 } ] }"
-            },
-            "url": {
-              "raw": "{{ventas_service_url}}/api/v1/sales",
-              "host": ["{{ventas_service_url}}"],
-              "path": ["api", "v1", "sales"]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Obtener Venta",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{ventas_service_url}}/api/v1/sales/{{venta_id}}",
-              "host": ["{{ventas_service_url}}"],
-              "path": ["api", "v1", "sales", "{{venta_id}}"]
-            }
-          },
-          "response": []
-        }
-      ]
-    }
-  ]
+	"info": {
+		"_postman_id": "1051b411-e2af-403a-8656-69a86034a6a5",
+		"name": "Microservicios Gestión Integral",
+		"description": "Colección de Postman para probar los endpoints de los microservicios de Clientes, Productos y Ventas.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50059355",
+		"_collection_link": "https://sececo-8733185.postman.co/workspace/Sebastian's-Workspace~7707a0fd-e7c9-49ec-86fd-37a1fc71377f/collection/50059355-1051b411-e2af-403a-8656-69a86034a6a5?action=share&source=collection_link&creator=50059355"
+	},
+	"item": [
+		{
+			"name": "Clientes Service",
+			"item": [
+				{
+					"name": "Crear Cliente",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n//   {\r\n//     \"nombre\": \"Sebastián\",\r\n//     \"email\": \"sebastian@example.com\",\r\n//     \"telefono\": \"123456789\"\r\n//   }\r\n//   {\r\n//     \"nombre\": \"María\",\r\n//     \"email\": \"maria@example.com\",\r\n//     \"telefono\": \"987654321\"\r\n//   }\r\n  {\r\n    \"nombre\": \"Juan\",\r\n    \"email\": \"juan@example.com\",\r\n    \"telefono\": \"555555555\"\r\n  }\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{clientes_service_url}}",
+							"host": [
+								"{{clientes_service_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{clientes_service_url}}/{{cliente_id}}",
+							"host": [
+								"{{clientes_service_url}}"
+							],
+							"path": [
+								"{{cliente_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Clientes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{clientes_service_url}}",
+							"host": [
+								"{{clientes_service_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Cliente",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"nombre\": \"Miguel Correa\", \"email\": \"miguel@example.com\", \"telefono\": 3105118081 }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{clientes_service_url}}/{{cliente_id}}",
+							"host": [
+								"{{clientes_service_url}}"
+							],
+							"path": [
+								"{{cliente_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Cliente",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"nombre\": \"Miguel Correa\", \"email\": \"miguel@example.com\", \"telefono\": 3105118081 }"
+						},
+						"url": {
+							"raw": "{{clientes_service_url}}/{{cliente_id}}",
+							"host": [
+								"{{clientes_service_url}}"
+							],
+							"path": [
+								"{{cliente_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Productos Service",
+			"item": [
+				{
+					"name": "Crear Producto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"nombre\": \"Producto A\", \"precio\": 100, \"stock\": 50 }"
+						},
+						"url": {
+							"raw": "{{productos_service_url}}",
+							"host": [
+								"{{productos_service_url}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productos_service_url}}",
+							"host": [
+								"{{productos_service_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{productos_service_url}}/{{producto_id}}",
+							"host": [
+								"{{productos_service_url}}"
+							],
+							"path": [
+								"{{producto_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Producto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{productos_service_url}}/{{producto_id}}",
+							"host": [
+								"{{productos_service_url}}"
+							],
+							"path": [
+								"{{producto_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Producto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{productos_service_url}}/{{producto_id}}",
+							"host": [
+								"{{productos_service_url}}"
+							],
+							"path": [
+								"{{producto_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ventas Service",
+			"item": [
+				{
+					"name": "Registrar Venta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test 1: Validate required variables are present before request",
+									"pm.test(\"Required variables are set\", function() {",
+									"    pm.expect(pm.variables.get(\"ventas_service_url\"), \"ventas_service_url variable is missing\").to.not.be.undefined;",
+									"    pm.expect(pm.variables.get(\"cliente_id\"), \"cliente_id variable is missing\").to.not.be.undefined;",
+									"    pm.expect(pm.variables.get(\"producto_id\"), \"producto_id variable is missing\").to.not.be.undefined;",
+									"});",
+									"",
+									"// Test 2: Status code validation",
+									"pm.test(\"Status code is 200 or 201 for successful creation\", function() {",
+									"    if (pm.response.code === 200 || pm.response.code === 201) {",
+									"        pm.response.to.be.success;",
+									"    } else if (pm.response.code === 400) {",
+									"        pm.expect.fail(\"Bad Request (400): \" + (pm.response.json().message || \"Invalid request data\"));",
+									"    } else if (pm.response.code === 404) {",
+									"        pm.expect.fail(\"Not Found (404): Resource not found\");",
+									"    } else if (pm.response.code === 500) {",
+									"        pm.expect.fail(\"Internal Server Error (500): \" + (pm.response.json().message || \"Server error\"));",
+									"    } else {",
+									"        pm.expect.fail(\"Unexpected status code: \" + pm.response.code);",
+									"    }",
+									"});",
+									"",
+									"// Test 3: Response body structure validation",
+									"pm.test(\"Response has valid JSON body\", function() {",
+									"    pm.response.to.be.json;",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.be.an('object');",
+									"});",
+									"",
+									"// Test 4: Validate success response structure",
+									"if (pm.response.code === 200 || pm.response.code === 201) {",
+									"    pm.test(\"Success response contains required fields\", function() {",
+									"        var jsonData = pm.response.json();",
+									"        ",
+									"        // Check for common success response fields",
+									"        if (jsonData.id) {",
+									"            pm.expect(jsonData.id).to.exist;",
+									"            pm.collectionVariables.set(\"venta_id\", jsonData.id);",
+									"        }",
+									"        ",
+									"        if (jsonData.client_id) {",
+									"            pm.expect(jsonData.client_id).to.equal(pm.variables.get(\"cliente_id\"));",
+									"        }",
+									"        ",
+									"        if (jsonData.items) {",
+									"            pm.expect(jsonData.items).to.be.an('array');",
+									"            pm.expect(jsonData.items.length).to.be.above(0);",
+									"        }",
+									"    });",
+									"}",
+									"",
+									"// Test 5: Specific error message parsing for 400 errors",
+									"if (pm.response.code === 400) {",
+									"    pm.test(\"Error response contains message field\", function() {",
+									"        var jsonData = pm.response.json();",
+									"        pm.expect(jsonData).to.have.property('message');",
+									"        pm.expect(jsonData.message).to.be.a('string');",
+									"        pm.expect(jsonData.message.length).to.be.above(0);",
+									"    });",
+									"    ",
+									"    pm.test(\"Parse and display error details\", function() {",
+									"        var jsonData = pm.response.json();",
+									"        var errorMessage = jsonData.message;",
+									"        ",
+									"        console.log(\"❌ Error Details:\");",
+									"        console.log(\"Status: \" + pm.response.code);",
+									"        console.log(\"Message: \" + errorMessage);",
+									"        ",
+									"        // Check for specific error patterns",
+									"        if (errorMessage.includes(\"Producto\") && errorMessage.includes(\"no tien\")) {",
+									"            console.log(\"⚠️ Issue: Product stock/availability problem\");",
+									"            console.log(\"Suggestion: Check product inventory or product_id validity\");",
+									"        } else if (errorMessage.includes(\"Cliente\")) {",
+									"            console.log(\"⚠️ Issue: Client-related problem\");",
+									"            console.log(\"Suggestion: Verify cliente_id exists and is valid\");",
+									"        } else if (errorMessage.includes(\"cantidad\")) {",
+									"            console.log(\"⚠️ Issue: Quantity-related problem\");",
+									"            console.log(\"Suggestion: Check if requested quantity is valid\");",
+									"        }",
+									"        ",
+									"        // Fail the test with detailed error",
+									"        pm.expect.fail(\"Venta creation failed: \" + errorMessage);",
+									"    });",
+									"}",
+									"",
+									"// Test 6: Response time validation",
+									"pm.test(\"Response time is acceptable (under 5 seconds)\", function() {",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+									"});",
+									"",
+									"// Test 7: Content-Type header validation",
+									"pm.test(\"Response has correct Content-Type\", function() {",
+									"    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "//{ \"client_id\": \"{{cliente_id}}\", \"items\": [ { \"product_id\": \"{{producto_id}}\", \"cantidad\": 2 } ] }\r\n{\r\n  \"client_id\": {{cliente_id}},\r\n  \"items\": [\r\n    {\r\n      \"product_id\": {{producto_id}},\r\n      \"quantity\": 2\r\n    },\r\n    {\r\n      \"product_id\": 1,\r\n      \"quantity\": 3\r\n    }\r\n  ]\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{ventas_service_url}}",
+							"host": [
+								"{{ventas_service_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Ventas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ventas_service_url}}",
+							"host": [
+								"{{ventas_service_url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ventas_service_url}}/{{venta_id}}",
+							"host": [
+								"{{ventas_service_url}}"
+							],
+							"path": [
+								"{{venta_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Venta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"client_id\": 2,\r\n  \"items\": [\r\n    {\r\n      \"product_id\": 1,\r\n      \"quantity\": 4\r\n    },\r\n    {\r\n      \"product_id\": 2,\r\n      \"quantity\": 2\r\n    }\r\n  ],\r\n  \"total\": 0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ventas_service_url}}/{{venta_id}}",
+							"host": [
+								"{{ventas_service_url}}"
+							],
+							"path": [
+								"{{venta_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Venta",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{ventas_service_url}}/{{venta_id}}",
+							"host": [
+								"{{ventas_service_url}}"
+							],
+							"path": [
+								"{{venta_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "venta_id",
+			"value": ""
+		}
+	]
 }
