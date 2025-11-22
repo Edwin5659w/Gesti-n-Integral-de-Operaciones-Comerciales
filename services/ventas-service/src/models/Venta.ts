@@ -10,7 +10,7 @@ export class VentaModel extends Model {
   client_id!: number;
 
   // Monto total de la venta (calculado en el servicio)
-  @Column({ type: DataType.FLOAT, allowNull: false })
+  @Column({ type: DataType.DOUBLE, allowNull: false })
   total!: number;
 
   // Fecha de creación; en el DTO puedes mapearlo a string ISO
@@ -30,7 +30,7 @@ export class VentaItemModel extends Model {
   @Column({ type: DataType.INTEGER, allowNull: false })
   quantity!: number;
 
-  @Column({ type: DataType.FLOAT, allowNull: true })
+  @Column({ type: DataType.DOUBLE, allowNull: true })
   price?: number; // Precio unitario usado en la venta (snapshoot en el momento)
 
   // Clave foránea interna hacia ventas

@@ -22,7 +22,7 @@ export class ProductoModel extends Model {
   descripcion?: string;
 
   @Column({
-    type: DataType.FLOAT,
+    type: DataType.DOUBLE,
     allowNull: false,
   })
   precio!: number;

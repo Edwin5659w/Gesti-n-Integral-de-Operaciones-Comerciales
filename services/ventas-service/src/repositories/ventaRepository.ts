@@ -17,7 +17,7 @@ export class VentaRepository {
     const newVenta = await VentaModel.create(
       {
         client_id: data.client_id,
-        total: data.total,
+        total: Number(data.total),
         created_at: new Date(),
         items: data.items,
       },
@@ -32,7 +32,7 @@ export class VentaRepository {
 
     await venta.update({
       client_id: data.client_id ?? venta.client_id,
-      total: data.total ?? venta.total,
+      total: Number(data.total ?? venta.total),
     });
 
     // Si hay items nuevos, reemplaza los existentes

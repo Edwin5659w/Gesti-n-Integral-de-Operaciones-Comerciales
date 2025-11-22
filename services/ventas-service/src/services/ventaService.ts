@@ -1,40 +1,101 @@
 // src/services/ventaService.ts
-import axios from "axios";
-import { VentaRepository } from "../repositories/ventaRepository";
-import { CreateVentaDTO, UpdateVentaDTO, VentaResponseDTO } from "../dto/ventasDTO";
-import { Venta as VentaType } from "../types/ventas";
+import axios from 'axios';
+import { VentaRepository } from '../repositories/ventaRepository';
+import {
+  CreateVentaDTO,
+  UpdateVentaDTO,
+  VentaResponseDTO,
+} from '../dto/ventasDTO';
+import { Venta, VentaItem } from '../types/ventas';
 
 export class VentaService {
   private repo = new VentaRepository();
 
-  // URLs de los otros microservicios (ajusta según tu docker-compose)
-  private clientesUrl = "http://clientes-service:3000/api/v1/clients";
-  private productosUrl = "http://productos-service:3000/api/v1/products";
+  // URLs de los otros microservicios (usa variables de entorno para flexibilidad)
+  private clientesUrl =
+    process.env.CLIENTES_URL || 'http://clientes-service:3000/api/v1/clients';
+  private productosUrl =
+    process.env.PRODUCTOS_URL ||
+    'http://productos-service:3000/api/v1/products';
 
   async create(dto: CreateVentaDTO): Promise<VentaResponseDTO> {
-    // 1. Validar cliente vía HTTP
-    const clienteRes = await axios.get(`${this.clientesUrl}/${dto.client_id}`);
-    if (!clienteRes.data) {
-      throw new Error("Cliente no encontrado");
-    }
+    try {
+      // 1. Validar cliente
+      const clienteRes = await axios.get(
+        `${this.clientesUrl}/${dto.client_id}`
+      );
+      if (!clienteRes.data) throw new Error('Cliente no encontrado');
 
-    // 2. Validar productos vía HTTP
-    for (const item of dto.items) {
-      const productoRes = await axios.get(`${this.productosUrl}/${item.product_id}`);
-      if (!productoRes.data) {
-        throw new Error(`Producto ${item.product_id} no encontrado`);
-      }
-      // opcional: validar stock, precio, etc.
-    }
+      // 2. Validar productos y calcular total
+      let total = 0;
+      const validatedItems: VentaItem[] = await Promise.all(
+        dto.items.map(async (item) => {
+          const productoRes = await axios.get(
+            `${this.productosUrl}/${item.product_id}`
+          );
+          const producto =
+            productoRes.data.data ||
+            productoRes.data.producto ||
+            productoRes.data;
+          if (!producto)
+            throw new Error(`Producto ${item.product_id} no encontrado`);
 
-    // 3. Registrar venta en la DB local
-    const venta = await this.repo.createVenta(dto as unknown as VentaType);
-    return new VentaResponseDTO(venta);
+          const cleanPrecio = String(
+            item.price ?? producto.precio ?? producto.price
+          )
+            .replace(',', '.')
+            .replace(/\./g, '');
+          const price = Number(cleanPrecio);
+
+          if (!price)
+            throw new Error(
+              `Producto ${item.product_id} no tiene precio definido`
+            );
+
+          if (isNaN(price)) {
+            throw new Error(
+              `El precio del producto ${item.product_id} no es un número válido`
+            );
+          }
+
+          const quantity = Number(item.quantity);
+
+          if (isNaN(quantity))
+            throw new Error(
+              `Producto ${item.product_id} no tiene cantidad válida`
+            );
+
+          total += price * quantity;
+          if (isNaN(total)) {
+            throw new Error("El total calculado no es válido");
+          }
+          
+
+          return {
+            product_id: item.product_id,
+            quantity: item.quantity,
+            price,
+          };
+        })
+      );
+
+      // 3. Registrar venta en la DB local
+      const venta: Venta = await this.repo.createVenta({
+        ...dto,
+        items: validatedItems,
+        total,
+        created_at: new Date().toISOString(),
+      } as Venta);
+
+      return new VentaResponseDTO(venta);
+    } catch (err: any) {
+      throw new Error(`Error al crear venta: ${err.message}`);
+    }
   }
 
   async list(): Promise<VentaResponseDTO[]> {
     const ventas = await this.repo.findAllVentas();
-    return ventas.map(v => new VentaResponseDTO(v));
+    return ventas.map((v) => new VentaResponseDTO(v));
   }
 
   async get(id: number): Promise<VentaResponseDTO | null> {
@@ -43,26 +104,83 @@ export class VentaService {
   }
 
   async update(dto: UpdateVentaDTO): Promise<VentaResponseDTO | null> {
-    // Validar cliente si se actualiza
-    if (dto.client_id) {
-      const clienteRes = await axios.get(`${this.clientesUrl}/${dto.client_id}`);
-      if (!clienteRes.data) {
-        throw new Error("Cliente no encontrado");
+    try {
+      // Validar cliente si se actualiza
+      if (dto.client_id) {
+        const clienteRes = await axios.get(
+          `${this.clientesUrl}/${dto.client_id}`
+        );
+        if (!clienteRes.data) throw new Error('Cliente no encontrado');
       }
-    }
 
-    // Validar productos si se actualizan
-    if (dto.items) {
-      for (const item of dto.items) {
-        const productoRes = await axios.get(`${this.productosUrl}/${item.product_id}`);
-        if (!productoRes.data) {
-          throw new Error(`Producto ${item.product_id} no encontrado`);
-        }
+      let total = dto.total ?? 0;
+      let validatedItems: VentaItem[] | undefined;
+
+      // Validar productos si se actualizan
+      if (dto.items) {
+        validatedItems = await Promise.all(
+          dto.items.map(async (item) => {
+            const productoRes = await axios.get(
+              `${this.productosUrl}/${item.product_id}`
+            );
+            const producto =
+              productoRes.data.data ||
+              productoRes.data.producto ||
+              productoRes.data;
+            if (!producto)
+              throw new Error(`Producto ${item.product_id} no encontrado`);
+
+            const cleanPrecio = String(
+              item.price ?? producto.precio ?? producto.price
+            )
+              .replace(',', '.')
+              .replace(/\./g, '');
+            const price = Number(cleanPrecio);
+
+            if (!price)
+              throw new Error(
+                `Producto ${item.product_id} no tiene precio definido`
+              );
+
+            if (isNaN(price)) {
+              throw new Error(
+                `El precio del producto ${item.product_id} no es un número válido`
+              );
+            }
+
+            const quantity = Number(item.quantity);
+
+            if (isNaN(quantity))
+              throw new Error(
+                `Producto ${item.product_id} no tiene cantidad válida`
+              );
+
+            total += price * quantity;
+            if (isNaN(total)) {
+              throw new Error("El total calculado no es válido");
+            }
+            
+
+            return {
+              product_id: item.product_id,
+              quantity: item.quantity,
+              price,
+            };
+          })
+        );
       }
-    }
 
-    const updated = await this.repo.updateVenta(dto.id, dto as unknown as VentaType);
-    return updated ? new VentaResponseDTO(updated) : null;
+      const updated = await this.repo.updateVenta(dto.id, {
+        ...dto,
+        items: validatedItems ?? dto.items,
+        total: validatedItems ? total : dto.total!,
+        created_at: new Date().toISOString(),
+      } as Venta);
+
+      return updated ? new VentaResponseDTO(updated) : null;
+    } catch (err: any) {
+      throw new Error(`Error al actualizar venta: ${err.message}`);
+    }
   }
 
   async delete(id: number): Promise<boolean> {

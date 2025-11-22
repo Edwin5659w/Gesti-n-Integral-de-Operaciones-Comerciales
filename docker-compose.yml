@@ -1,21 +1,8 @@
 services:
-  # --- Clientes ---
-  clientes-service:
-    build:
-      context: ./services/clientes-service
-      dockerfile: Dockerfile
-    env_file:
-      - ./services/clientes-service/.env
-    ports:
-      - "3001:3000"
-    networks:
-      - microservices-network
-    depends_on:
-      - clientes-db
-
+  # --- Clientes DB ---
   clientes-db:
     image: mysql:8.0
-    restart: always
+    restart: always # 👈 Aplicado
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: clientes
@@ -23,24 +10,32 @@ services:
       - clientes-data:/var/lib/mysql
     networks:
       - microservices-network
+    healthcheck: # 👈 Asegura que MySQL esté listo
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      start_period: 10s
 
-  # --- Productos ---
-  productos-service:
+  # --- Clientes Service ---
+  clientes-service:
     build:
-      context: ./services/productos-service
+      context: ./services/clientes-service
       dockerfile: Dockerfile
+    restart: always # 👈 Aplicado
     env_file:
-      - ./services/productos-service/.env
+      - ./services/clientes-service/.env
     ports:
-      - "3002:3000"
+      - "3001:3000"
     networks:
       - microservices-network
     depends_on:
-      - productos-db
+      clientes-db:
+        condition: service_healthy # 👈 Espera a que la DB esté lista
 
+  # --- Productos DB ---
   productos-db:
     image: mysql:8.0
-    restart: always
+    restart: always # 👈 Aplicado
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: productos
@@ -48,24 +43,32 @@ services:
       - productos-data:/var/lib/mysql
     networks:
       - microservices-network
+    healthcheck: # 👈 Asegura que MySQL esté listo
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      start_period: 10s
 
-  # --- Ventas ---
-  ventas-service:
+  # --- Productos Service ---
+  productos-service:
     build:
-      context: ./services/ventas-service
+      context: ./services/productos-service
       dockerfile: Dockerfile
+    restart: always # 👈 Aplicado
     env_file:
-      - ./services/ventas-service/.env
+      - ./services/productos-service/.env
     ports:
-      - "3003:3000"
+      - "3002:3000"
     networks:
       - microservices-network
     depends_on:
-      - ventas-db
+      productos-db:
+        condition: service_healthy # 👈 Espera a que la DB esté lista
 
+  # --- Ventas DB ---
   ventas-db:
     image: mysql:8.0
-    restart: always
+    restart: always # 👈 Aplicado
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: ventas
@@ -73,23 +76,50 @@ services:
       - ventas-data:/var/lib/mysql
     networks:
       - microservices-network
+    healthcheck: # 👈 Asegura que MySQL esté listo
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      start_period: 10s
 
-  # nginx para servir
+  # --- Ventas Service ---
+  ventas-service:
+    build:
+      context: ./services/ventas-service
+      dockerfile: Dockerfile
+    restart: always # 👈 Aplicado
+    env_file:
+      - ./services/ventas-service/.env
+    ports:
+      - "3003:3000"
+    networks:
+      - microservices-network
+    depends_on:
+      ventas-db:
+        condition: service_healthy # 👈 Espera a que la DB esté lista
+
+  # --- Nginx Gateway ---
   nginx:
     image: nginx:latest
+    restart: always # 👈 Aplicado
     volumes:
       - ./infra/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - "8080:80"
-    depends_on:
-      - clientes-service
-      - productos-service
-      - ventas-service
     networks:
       - microservices-network
-
-
-
+    depends_on:
+      clientes-service:
+        condition: service_started
+      productos-service:
+        condition: service_started
+      ventas-service:
+        condition: service_started
+    healthcheck: # 👈 Asegura que Nginx esté respondiendo
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 # --- Redes y volúmenes ---
 networks:
