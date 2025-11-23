@@ -20,6 +20,7 @@ Este proyecto implementa un sistema de microservicios para la gestión integral 
 
 ## Entrega III
 - [Video](https://www.youtube.com/watch?v=7-n8GQDU0ng)
+- [Resumen](https://youtu.be/Ql9z4shZKiQ)
 
 ## 🏗️ Arquitectura
 
